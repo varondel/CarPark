@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerCar : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    private BoxCollider playerBoxCollider;
+    private void Awake()
+    {
+        playerBoxCollider = GetComponent<BoxCollider>();
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 
@@ -52,6 +58,31 @@ public class PlayerCar : MonoBehaviour {
             }
             ApplyLocalPositionToVisuals(axleInfo.leftWheel, axleInfo.leftWheel_T);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel, axleInfo.rightWheel_T);
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "CollisionFail")
+            Debug.Log("Game over !");
+    }
+
+
+    [SerializeField]
+    private ParkingSlots parkingSlots;
+
+    public void OnTriggerStay(Collider collider)
+    {
+        if(playerBoxCollider.bounds.min.x > collider.bounds.min.x &&
+           playerBoxCollider.bounds.max.x < collider.bounds.max.x &&
+
+           playerBoxCollider.bounds.min.y > collider.bounds.min.y &&
+           playerBoxCollider.bounds.max.y < collider.bounds.max.y &&
+
+           playerBoxCollider.bounds.min.z > collider.bounds.min.z &&
+           playerBoxCollider.bounds.max.z < collider.bounds.max.z)
+        {
+            parkingSlots.SetVictoryTexture();
         }
     }
 }
