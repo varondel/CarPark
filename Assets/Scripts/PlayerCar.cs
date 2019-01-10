@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCar : MonoBehaviour {
 
+    private bool canMove = true;
     private BoxCollider playerBoxCollider;
     private void Awake()
     {
@@ -39,6 +40,8 @@ public class PlayerCar : MonoBehaviour {
 
     public void FixedUpdate()
     {
+        if (!canMove)
+            return;
 
         // Control wheel collider
         float motor = maxMotorTorque * Input.GetAxis("Vertical");
@@ -63,8 +66,11 @@ public class PlayerCar : MonoBehaviour {
 
     public void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "CollisionFail")
-            Debug.Log("Game over !");
+        if (collision.gameObject.tag == "CollisionFail")
+        {
+            canMove = false;
+            GameObject.Find("GameMgr").GetComponent<GameMgr>().Lose();
+        }   
     }
 
 
