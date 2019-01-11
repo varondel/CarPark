@@ -4,11 +4,32 @@ using UnityEngine;
 
 public class PlayerCar : MonoBehaviour {
 
+    // Control movement
     private bool canMove = true;
+
+    // Physics
     private BoxCollider playerBoxCollider;
+    private Rigidbody rigidBody;
+
+    //Sounds
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip motorLoop, motorOff, collisionSound; 
+
     private void Awake()
     {
         playerBoxCollider = GetComponent<BoxCollider>();
+        rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.loop = true;
+        audioSource.clip = motorLoop;
+        audioSource.volume = 0.3f;
+        audioSource.Play();
+    }
+
+    private void OnEnabled()
+    {
+        
     }
 
     // Use this for initialization
@@ -22,7 +43,6 @@ public class PlayerCar : MonoBehaviour {
  
     }
         
-
     public List<AxleInfo> axleInfos; // the information about each individual axle
     public float maxMotorTorque; // maximum torque the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
@@ -42,6 +62,19 @@ public class PlayerCar : MonoBehaviour {
     {
         if (!canMove)
             return;
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            audioSource.pitch = 1f;
+        }
+        else if(Input.GetAxis("Vertical") < 0)
+        {
+            audioSource.pitch = 0.95f;
+        }
+        else if (Input.GetAxis("Vertical") == 0)
+        {
+            audioSource.pitch = 0.9f;
+        }
 
         // Control wheel collider
         float motor = maxMotorTorque * Input.GetAxis("Vertical");
@@ -64,19 +97,25 @@ public class PlayerCar : MonoBehaviour {
         }
     }
 
+    // Manage collision
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "CollisionFail")
         {
             canMove = false;
+
+            audioSource.pitch = 0.9f;
+            audioSource.Stop();
+            audioSource.PlayOneShot(collisionSound);
+            // Stop the car
+            rigidBody.isKinematic = true;
             GameObject.Find("GameMgr").GetComponent<GameMgr>().Lose();
+
+            
         }   
     }
 
-
-    [SerializeField]
-    private ParkingSlots parkingSlots;
-
+    // Check win condition
     public void OnTriggerStay(Collider collider)
     {
         if(playerBoxCollider.bounds.min.x > collider.bounds.min.x &&
@@ -86,9 +125,18 @@ public class PlayerCar : MonoBehaviour {
            playerBoxCollider.bounds.max.y < collider.bounds.max.y &&
 
            playerBoxCollider.bounds.min.z > collider.bounds.min.z &&
-           playerBoxCollider.bounds.max.z < collider.bounds.max.z)
+           playerBoxCollider.bounds.max.z < collider.bounds.max.z &&
+           
+           canMove)
         {
-            parkingSlots.SetVictoryTexture();
+            canMove = false;
+            // Stop the car
+            rigidBody.isKinematic = true;
+            audioSource.pitch = 0.9f;
+            audioSource.Stop();
+            audioSource.PlayOneShot(motorOff);
+            
+            GameObject.Find("GameMgr").GetComponent<GameMgr>().Win();
         }
     }
 }

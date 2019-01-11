@@ -7,9 +7,21 @@ public class GameMgr : MonoBehaviour {
     [SerializeField]
     GameObject LostScreen;
 
+    [SerializeField]
+    GameObject WinScreen;
+
+    [SerializeField]
+    private ParkingSlots parkingSlots;
+
     public void Lose()
     {
         LostScreen.SetActive(true);
+    }
+
+    public void Win()
+    {
+        parkingSlots.SetVictoryTexture();
+        WinScreen.SetActive(true);
     }
 
 	// Use this for initialization
