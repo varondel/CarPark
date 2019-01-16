@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerCar : MonoBehaviour {
 
@@ -63,22 +64,23 @@ public class PlayerCar : MonoBehaviour {
         if (!canMove)
             return;
 
-        if (Input.GetAxis("Vertical") > 0)
+        if (CrossPlatformInputManager.GetButton("Accelerate"))
         {
             audioSource.pitch = 1f;
         }
-        else if(Input.GetAxis("Vertical") < 0)
+        else if(CrossPlatformInputManager.GetButton("Brake"))
         {
             audioSource.pitch = 0.95f;
         }
-        else if (Input.GetAxis("Vertical") == 0)
+        else
         {
             audioSource.pitch = 0.9f;
         }
 
         // Control wheel collider
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
-        float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+        float motor = CrossPlatformInputManager.GetButton("Accelerate") ? maxMotorTorque : 
+            (CrossPlatformInputManager.GetButton("Brake") ? -maxMotorTorque : 0);
+        float steering = maxSteeringAngle * CrossPlatformInputManager.GetAxis("Horizontal");
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
