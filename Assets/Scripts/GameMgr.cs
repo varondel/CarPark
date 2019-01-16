@@ -5,13 +5,20 @@ using UnityEngine;
 public class GameMgr : MonoBehaviour {
 
     [SerializeField]
-    GameObject LostScreen;
-
-    [SerializeField]
-    GameObject WinScreen;
+    GameObject LostScreen, WinScreen, Player;
 
     [SerializeField]
     private ParkingSlots parkingSlots;
+
+    public void Activate()
+    {
+        Player.SetActive(true);
+    }
+
+    public void Desactivate()
+    {
+        Player.SetActive(false);
+    }
 
     public void Lose()
     {
