@@ -7,7 +7,7 @@ public class LoseMgr : MonoBehaviour {
 
     public void OnAnimatorFinish()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(PlayerPrefs.GetInt("progress") + 1);
     }
 
 	// Use this for initialization

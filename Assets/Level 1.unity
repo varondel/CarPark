@@ -871,7 +871,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &394098778
 Prefab:
@@ -1186,7 +1186,7 @@ RectTransform:
   - {fileID: 756108575}
   - {fileID: 319279845}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3897,6 +3897,7 @@ GameObject:
   - component: {fileID: 1988601642}
   - component: {fileID: 1988601641}
   - component: {fileID: 1988601640}
+  - component: {fileID: 1988601646}
   m_Layer: 0
   m_Name: ImageTarget
   m_TagString: Untagged
@@ -4002,8 +4003,20 @@ Transform:
   - {fileID: 1755946703}
   - {fileID: 944166055}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1988601646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1988601639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3802809152e9e094faf0c58042d5e068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameMgr: {fileID: 2139999520}
 --- !u!1 &2021818359 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1664593040851034, guid: 0ae65270c30153049ab49eb3ebf070d6,
@@ -4146,6 +4159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LostScreen: {fileID: 756108574}
   WinScreen: {fileID: 319279841}
+  Player: {fileID: 1686496548}
   parkingSlots: {fileID: 1959892225}
 --- !u!4 &2139999521
 Transform:
@@ -4158,5 +4172,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

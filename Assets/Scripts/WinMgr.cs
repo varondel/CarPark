@@ -7,7 +7,15 @@ public class WinMgr : MonoBehaviour {
 
     public void OnAnimatorFinish()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        PlayerPrefs.SetInt("progress", SceneManager.GetActiveScene().buildIndex);
+        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+        {
+            PlayerPrefs.SetInt("progress", 0);
+            SceneManager.LoadScene(0);
+        }
+            
     }
 
 	// Use this for initialization
