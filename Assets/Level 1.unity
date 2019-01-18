@@ -3405,7 +3405,7 @@ MonoBehaviour:
     rightWheel_T: {fileID: 2059180070}
     motor: 1
     steering: 0
-  maxMotorTorque: 250
+  maxMotorTorque: 125
   maxSteeringAngle: 30
 --- !u!82 &1686496553
 AudioSource:
